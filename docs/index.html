@@ -45,6 +45,24 @@
             font-style: italic;
             color: #6c757d;
         }
+        .project-link, .resume-link {
+            display: inline-block;
+            margin: 1rem 0;
+            padding: 0.6rem 1.2rem;
+            background: #343a40;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .project-link:hover, .resume-link:hover {
+            background: #495057;
+            transform: translateY(-2px);
+        }
+        .highlight {
+            font-weight: bold;
+            color: #343a40;
+        }
     </style>
 </head>
 <body>
@@ -57,8 +75,11 @@
         <p>🚀 Stay tuned for updates!</p>
         <br>
       
-        <p>Visit my latest project. Link Below!</p>
+        <p>Visit my latest project:</p>
         <a href="https://snehabansal483.github.io/GSM/" class="project-link" target="_blank" rel="noopener noreferrer">Grocery Management System</a>
+        
+        <p>Download my resume:</p>
+        <a href="resume/Sneha_CE.pdf" class="resume-link" download="Sneha_CE.pdf">Download Resume</a>
 
         <div class="signature">
             — Working diligently to launch soon
