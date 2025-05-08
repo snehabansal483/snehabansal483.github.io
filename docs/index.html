@@ -3,87 +3,937 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio | Coming Soon</title>
-    <link rel="icon" type="image/png" href="images/portfolio.png">
+    <title>Sneha Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
         body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            background: #f8f9fa;
-            color: #212529;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
         }
-        .container {
-            padding: 3rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            max-width: 600px;
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #343a40;
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .status {
-            display: inline-block;
-            background: #fff3cd;
-            color: #856404;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            font-weight: bold;
+        
+        .skill-bar {
+            transition: width 1.5s ease-in-out;
         }
-        .signature {
-            margin-top: 3rem;
-            font-style: italic;
-            color: #6c757d;
+        
+        .nav-link {
+            position: relative;
         }
-        .project-link, .resume-link {
-            display: inline-block;
-            margin: 1rem 0;
-            padding: 0.6rem 1.2rem;
-            background: #343a40;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.3s ease;
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #667eea;
+            transition: width 0.3s ease;
         }
-        .project-link:hover, .resume-link:hover {
-            background: #495057;
-            transform: translateY(-2px);
+        
+        .nav-link:hover::after {
+            width: 100%;
         }
-        .highlight {
-            font-weight: bold;
-            color: #343a40;
+        
+        .active::after {
+            width: 100%;
+        }
+
+        /* Hide additional projects by default */
+        .additional-project {
+            display: none;
+        }
+
+        /* Show all projects when this class is added */
+        .show-all .additional-project {
+            display: block;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="status">WORK IN PROGRESS</div>
-        <h1>My Creative Portfolio</h1>
-        <p>I'm currently crafting something special to showcase my work and skills.</p>
-        <p>This will be more than just a portfolio – it'll reflect my passion for design and development.</p>
-        <p class="highlight">Make sure to visit this project, I'll have something amazing ready for you!</p>
-        <p>🚀 Stay tuned for updates!</p>
-        <br>
-      
-        <p>Visit my latest project:</p>
-        <a href="https://snehabansal483.github.io/GSM/" class="project-link" target="_blank" rel="noopener noreferrer">Grocery Management System</a>
-        
-        <p>Download my resume:</p>
-        <a href="resume/Sneha_Bansal_Resume.pdf" class="resume-link" download="Sneha_Bansal_Resume.pdf">Download Resume</a>
-
-        <div class="signature">
-            — Working diligently to launch soon
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-xl font-bold text-indigo-600">SB</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="nav-link px-3 py-2 text-sm font-medium text-gray-900 hover:text-indigo-600">Home</a>
+                        <a href="#about" class="nav-link px-3 py-2 text-sm font-medium text-gray-900 hover:text-indigo-600">About</a>
+                        <a href="#skills" class="nav-link px-3 py-2 text-sm font-medium text-gray-900 hover:text-indigo-600">Skills</a>
+                        <a href="#projects" class="nav-link px-3 py-2 text-sm font-medium text-gray-900 hover:text-indigo-600">Projects</a>
+                        <a href="#contact" class="nav-link px-3 py-2 text-sm font-medium text-gray-900 hover:text-indigo-600">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-gray-500 hover:text-indigo-600 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-indigo-600">Home</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-indigo-600">About</a>
+                <a href="#skills" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-indigo-600">Skills</a>
+                <a href="#projects" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-indigo-600">Projects</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-indigo-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg text-white pt-32 pb-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Hi, I'm <span class="text-indigo-200">Sneha Bansal</span></h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6">Full Stack Developer</h2>
+                    <p class="text-lg mb-8 text-indigo-100">I specialize in delivering fast, accessible, and visually engaging web experiences.</p>
+                    <div class="flex space-x-4">
+                        <a href="#projects" class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-medium hover:bg-indigo-50 transition duration-300">View My Work</a>
+                        <a href="#contact" class="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-indigo-600 transition duration-300">Contact Me</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                        <img src="image/profile_pic.jpg" 
+                             alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center">
+                    <div class="w-64 h-64 rounded-lg overflow-hidden shadow-lg">
+                        <img src="image/profile_pic.jpg" 
+                             alt="About" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="md:w-2/3 md:pl-12">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Who am I?</h3>
+                    <p class="text-gray-600 mb-6">I'm a passionate Full Stack Developer and 3rd-year engineering student with hands-on experience building modern web applications. I specialize in JavaScript technologies like React.js and Node.js, backend development using Python (Robyn, Flask) and Java, and database management with MySQL and MongoDB.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Personal Information</h4>
+                            <ul class="text-gray-600 space-y-1">
+                                <li><span class="font-medium">Name:</span> Sneha Bansal</li>
+                                <li><span class="font-medium">Age:</span> 20</li>
+                                <li><span class="font-medium">Location:</span> Pune,Maharashtra</li>
+                                <li><span class="font-medium">Email:</span> snehabansal481@gmail.com</li>
+        
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Education</h4>
+                            <ul class="text-gray-600 space-y-1">
+                                <li><span class="font-medium">2022-2026:</span> B.tech in Computer Engineering</li>
+                                <li>Baharti Vidyapeeth College Of Engineering, Pune Maharashtra</li>
+                            </ul>
+                            
+                        </div>
+                        
+                    </div>
+                                    <!-- Work Experience Section -->
+                <div class="mb-8">
+                    <h4 class="font-semibold text-gray-800 mb-2">Work Experience</h4>
+                    <ul class="text-gray-600 space-y-2">
+                        <li>
+                            <span class="font-medium">Software Developer Intern</span> at Kabadi Techno 
+                            <br>
+                            <span class="text-sm text-gray-500">Jan 2025 - Present</span>
+                            <p class="mt-1">Working on the <span class="font-medium">Signi</span> project — developing and improving features for signature verification using Python (Robyn framework) and machine learning models.</p>
+                        </li>
+                    </ul>
+                </div>
+
+
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="Resume/Sneha_Resume (4).pdf" target="_blank" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition duration-300 flex items-center">
+                            <i class="fas fa-download mr-2"></i> Download CV
+                        </a>
+                        
+                        <a href="#contact" class="border-2 border-indigo-600 text-indigo-600 px-6 py-2 rounded-lg font-medium hover:bg-indigo-50 transition duration-300 flex items-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Hire Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">My Skills</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Technical Skills -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
+                        <i class="fas fa-code mr-3 text-indigo-600"></i> Technical Skills
+                    </h3>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">HTML/CSS</span>
+                                <span class="text-sm font-medium text-gray-700">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">JavaScript</span>
+                                <span class="text-sm font-medium text-gray-700">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">React.js / Next.js</span>
+                                <span class="text-sm font-medium text-gray-700">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Node.js</span>
+                                <span class="text-sm font-medium text-gray-700">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Python</span>
+                                <span class="text-sm font-medium text-gray-700">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Java</span>
+                                <span class="text-sm font-medium text-gray-700">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">MySQL</span>
+                                <span class="text-sm font-medium text-gray-700">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">MongoDB</span>
+                                <span class="text-sm font-medium text-gray-700">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                
+                
+                <!-- Professional Skills -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
+                        <i class="fas fa-chart-line mr-3 text-indigo-600"></i> Professional Skills
+                    </h3>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Communication</span>
+                                <span class="text-sm font-medium text-gray-700">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Team Work</span>
+                                <span class="text-sm font-medium text-gray-700">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Project Management</span>
+                                <span class="text-sm font-medium text-gray-700">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Creativity</span>
+                                <span class="text-sm font-medium text-gray-700">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Time Management</span>
+                                <span class="text-sm font-medium text-gray-700">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Adaptability</span>
+                                <span class="text-sm font-medium text-gray-700">88%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Problem-Solving</span>
+                                <span class="text-sm font-medium text-gray-700">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Leadership</span>
+                                <span class="text-sm font-medium text-gray-700">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="skill-bar bg-indigo-600 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tools & Technologies -->
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
+                    <i class="fas fa-tools mr-3 text-indigo-600"></i> Tools & Technologies
+                </h3>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <!-- Programming Languages -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40" class="mb-2">
+                        <span class="text-sm">C</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" width="40" height="40" class="mb-2">
+                        <span class="text-sm">C++</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Java</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40" class="mb-2">
+                        <span class="text-sm">JavaScript</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Python</span>
+                    </div>
+            
+                    <!-- Frontend Development -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40" class="mb-2">
+                        <span class="text-sm">HTML5</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40" class="mb-2">
+                        <span class="text-sm">CSS3</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Bootstrap</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40" class="mb-2">
+                        <span class="text-sm">React</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" alt="nextjs" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Next.js</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Tailwind</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <i class="fab fa-github text-4xl text-gray-800 mb-2"></i>
+                        <span class="text-sm">GitHub</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://streamlit.io/images/brand/streamlit-mark-color.svg" alt="streamlit" width="60" height="60" class="mb-2">
+                        <span class="text-sm">Streamlit</span>
+                    </div>
+            
+                    <!-- Backend Development -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Node.js</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://www.vectorlogo.zone/logos/palletsprojects_flask/palletsprojects_flask-icon.svg" alt="flask" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Flask</span>
+                    </div>
+                   
+                    
+
+            
+                    <!-- Mobile App Development -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Android</span>
+                    </div>
+            
+                    <!-- Database -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40" class="mb-2">
+                        <span class="text-sm">MongoDB</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40" class="mb-2">
+                        <span class="text-sm">MySQL</span>
+                    </div>
+            
+                    <!-- DevOps & Cloud -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" width="40" height="40" class="mb-2">
+                        <span class="text-sm">AWS</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Docker</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg" alt="gcp" width="40" height="40" class="mb-2">
+                        <span class="text-sm">GCP</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Git</span>
+                    </div>
+
+                    <!-- Jenkins -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="Jenkins" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Jenkins</span>
+                    </div>
+
+            
+                    <!-- Testing -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/detain/svg-logos/780f25886640cef088af994181646db2f6b1a3f8/svg/selenium-logo.svg" alt="selenium" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Selenium</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Postman</span>
+                    </div>
+            
+                    <!-- Data Science & AI -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Pandas</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt="seaborn" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Seaborn</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://www.vectorlogo.zone/logos/opencv/opencv-icon.svg" alt="opencv" width="40" height="40" class="mb-2">
+                        <span class="text-sm">OpenCV</span>
+                    </div>
+            
+                    <!-- Design & Others -->
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/photoshop/photoshop-line.svg" alt="photoshop" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Photoshop</span>
+                    </div>
+                    <div class="flex flex-col items-center p-4 w-24">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40" class="mb-2">
+                        <span class="text-sm">Linux</span>
+                    </div>
+                </div>
+            </div>
+             
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">My Projects</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-container">
+                <!-- Project 1 (Visible by default) -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="image/Interview.png"
+                             alt="Project 1" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                       
+                            <h3 class="text-xl font-semibold mb-2 text-gray-800">AI Interview Coach</h3>
+                            <p class="text-gray-600 mb-4">
+                                An intelligent interview preparation tool that generates personalized questions and answers based on job role, experience level, company, and project details. 
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Flask</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Streamlit</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Python</span>
+                            </div>
+                            <div class="flex space-x-3">
+                                <a href="https://interview-coach-frontend.onrender.com/" target="_blank" class="text-indigo-600 hover:text-indigo-800">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                                <a href="https://github.com/snehabansal483/backend-repo" target="_blank" class="text-gray-600 hover:text-gray-800">
+                                    <i class="fab fa-github"></i> Source Code
+                                </a>
+                            </div>   
+                    </div>
+                </div>
+                
+                <!-- Project 2 (Visible by default) -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="image/GSM.png" 
+                             alt="Project 2" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Grocery Management App</h3>
+                        <p class="text-gray-600 mb-4">A full-stack web application for managing grocery store inventory, orders, and user accounts with Flask backend and Bootstrap frontend.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Flask</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">HTML</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Bootstrap</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">MYSQL</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="https://snehabansal483.github.io/GSM/" target="_blank" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/snehabansal483/GSM" target="_blank" class="text-gray-600 hover:text-gray-800">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 (Visible by default) -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="image/Fitness.png" 
+                             alt="Project 3" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Fitness Tracker ChatBot</h3>
+                        <p class="text-gray-600 mb-4">A Next.js-based fitness tracking chatbot that helps users log workouts, track progress, and get fitness recommendations. The chatbot uses Replicate's AI model for natural language processing and MongoDB for data persistence.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Next.js</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Node.js</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">MongoDB</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="https://fitness-tracker-chatbot.vercel.app/" target="_blank" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/snehabansal483/fitness-tracker-chatbot" target="_blank" class="text-gray-600 hover:text-gray-800">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <!-- Additional Projects (Hidden by default) -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 additional-project">
+                    <div class="h-48 overflow-hidden">
+                        <img src="image/masco-landing.png" 
+                             alt="Project 4" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Masco Landing page</h3>
+                        <p class="text-gray-600 mb-4">Developed a fully responsive Masco landing page using HTML, CSS, Bootstrap, and JavaScript, ensuring seamless
+                            user experience across all devices.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Next.js</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">TailwindCSS</span>
+
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="https://new-task-8.vercel.app/" target="_blank" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/snehabansal483/new-task-8" target="_blank" class="text-gray-600 hover:text-gray-800">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                 <!-- <div class="project-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 additional-project">
+                    <div class="h-48 overflow-hidden">
+                        <img src="image/Aviator.png" 
+                             alt="Project 5" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">2D Aviator Game</h3>
+                        <p class="text-gray-600 mb-4">A 2D Plane Simulation Game built using C++ and OpenGL (GLUT).
+                            Fly your plane, dodge obstacles, shoot bullets, and experience day-night transitions and dynamic weather effects — all in real-time!</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">C++</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/snehabansal483/The-Aviator-game" target="_blank"  class="text-gray-600 hover:text-gray-800">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div> -->
+                
+               <!-- <div class="project-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 additional-project">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Project 6" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Recipe Finder</h3>
+                        <p class="text-gray-600 mb-4">An application to search for recipes based on ingredients with nutritional information.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Vue.js</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">API</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Firebase</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-gray-800">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             -->
+        </div>
+        <div class="text-center mt-12">
+            <button id="view-all-btn" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">
+                View All Projects
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Get In Touch</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <div class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-6 text-gray-800">Contact Information</h3>
+                        <p class="text-gray-600 mb-6">Feel free to reach out to me for any questions or opportunities. I'll get back to you as soon as possible.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800">Location</h4>
+                                    <p class="text-gray-600">Pune, Maharashtra</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800">Email</h4>
+                                    <p class="text-gray-600">snehabansal481@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <!-- <div class="flex items-start">
+                                <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone-alt text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800">Phone</h4>
+                                    <p class="text-gray-600">+91 7017210793</p>
+                                </div>
+                            </div> -->
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-medium text-gray-800 mb-4">Follow Me</h4>
+                            <div class="flex space-x-4">
+                                <a href="https://www.linkedin.com/in/sneha-bansal-67b8a724b/" class="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 transition duration-300">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://github.com/snehabansal483" class="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 transition duration-300">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <!-- <a href="https://x.com/SnehaBa50023909" class="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 transition duration-300">
+                                    <i class="fab fa-twitter"></i>
+                                </a> -->
+                                <a href="https://leetcode.com/u/Sneha28-bansal/" class="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 transition duration-300">
+                                    <i class="fas fa-code"></i>
+                                </a>
+
+                                <!-- <a href="#" class="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 transition duration-300">
+                                    <i class="fab fa-instagram"></i>
+                                </a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-6 text-gray-800">Send Me a Message</h3>
+                        <form onsubmit="handleSubmit(event)">
+                            <div class="mb-4">
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter your name">
+                            </div>
+                        
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Your Email</label>
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter your email">
+                            </div>
+                        
+                            <div class="mb-4">
+                                <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                <input type="text" id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter subject">
+                            </div>
+                        
+                            <div class="mb-6">
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
+                                <textarea id="message" name="message" required rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter your message"></textarea>
+                            </div>
+                        
+                            <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                        
+                        <script>
+                            function handleSubmit(event) {
+                                event.preventDefault(); // Stop default form submit
+                
+                                // Collect form data
+                                const formData = new FormData(event.target);
+                
+                                // Send data to Getform endpoint
+                                fetch("https://getform.io/f/aqokxwda", {
+                                    method: "POST",
+                                    body: formData
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                    
+                                        window.location.href = "thank-you.html"; // Redirect to thank you page
+                                    } else {
+                                        alert("Failed to send mail. Please try again.");
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error(error);
+                                    alert("Error occurred while sending mail.");
+                                });
+                            }
+                        </script>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="#" class="text-xl font-bold text-white">PORTFOLIO</a>
+                    <p class="text-gray-400 mt-2">© 2025 Sneha Bansal. All rights reserved.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="https://www.linkedin.com/in/sneha-bansal-67b8a724b/" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/snehabansal483" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <!-- <a href="https://x.com/SnehaBa50023909" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a> -->
+                    <a href="https://leetcode.com/u/Sneha28-bansal/" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fas fa-code"></i>
+                    </a>
+                    <!-- <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a> -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Highlight active navigation link
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Animate skill bars when they come into view
+        const skillBars = document.querySelectorAll('.skill-bar');
+        
+        const animateSkillBars = () => {
+            skillBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            bar.style.width = width;
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(bar);
+            });
+        };
+        
+        // Run once when page loads
+        animateSkillBars();
+
+        // Toggle additional projects
+        const viewAllBtn = document.getElementById('view-all-btn');
+        const projectsContainer = document.getElementById('projects-container');
+        
+        viewAllBtn.addEventListener('click', () => {
+            projectsContainer.classList.toggle('show-all');
+            
+            // Change button text based on state
+            if (projectsContainer.classList.contains('show-all')) {
+                viewAllBtn.textContent = 'Show Less Projects';
+            } else {
+                viewAllBtn.textContent = 'View All Projects';
+            }
+        });
+    </script>
 </body>
 </html>
